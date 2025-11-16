@@ -25,7 +25,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
             const user = await getMe();
             if (user) setUser(user);
           } catch {
-            // игнорируем ошибку, просто сбрасываем аутентификацию
             clearIsAuthenticated();
           }
         } else {
