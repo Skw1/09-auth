@@ -2,12 +2,17 @@ import { api, ApiError } from './api';
 import type { User } from '@/types/user';
 import type { Note } from '@/types/note';
 
+interface NotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
+
 export const fetchNotes = async (params?: {
   search?: string;
   page?: number;
   tag?: string;
-}): Promise<Note[]> => {
-  const { data } = await api.get<Note[]>('/notes', { params });
+}): Promise<NotesResponse> => {
+  const { data } = await api.get<NotesResponse>('/notes', { params });
   return data;
 };
 
