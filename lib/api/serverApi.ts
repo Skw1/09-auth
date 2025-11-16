@@ -4,7 +4,6 @@ import type { Note } from '@/types/note';
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
-// ---------------------- NOTES ----------------------
 export const fetchNotes = async (
   cookies?: string,
   params?: { search?: string; page?: number; tag?: string }
