@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export const config = {
   matcher: ['/profile/:path*', '/notes/:path*', '/sign-in', '/sign-up'],
-  runtime: 'edge',
+  runtime: 'experimental-edge',
 };
 
 export function middleware(req: NextRequest) {
