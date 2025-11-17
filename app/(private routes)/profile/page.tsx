@@ -1,40 +1,43 @@
-'use client';
-
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import Link from 'next/link';
+import { getMe } from '@/lib/api/serverApi';
+import { redirect } from 'next/navigation';
 import css from './ProfilePage.module.css';
-import { useAuthStore } from '@/lib/store/authStore';
-import { getMe } from '@/lib/api/clientApi';
 
-const ProfilePage = () => {
-  const router = useRouter();
-  const { user, setUser } = useAuthStore();
+export const metadata = {
+  title: 'My Profile',
+  descriprion: 'User profile and settings',
+};
 
-  useEffect(() => {
-    if (!user) {
-      getMe()
-        .then(setUser)
-        .catch(() => {});
-    }
-  }, [user, setUser]);
+export default async function ProfilePage() {
+  let user;
 
-  if (!user) return <p>Loading...</p>;
+  try {
+    user = await getMe();
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    user = null;
+  }
+
+  if (!user) {
+    redirect('/sign-in');
+  }
 
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
         <div className={css.header}>
-          <h1 className={css.formTitle}>Profile</h1>
+          <h1 className={css.formTitle}>My Profile</h1>
         </div>
 
         <div className={css.avatarWrapper}>
           <Image
             src={user.avatar || '/default-avatar.png'}
-            alt="User Avatar"
+            alt={`${user.username}'s avatar`}
             width={120}
             height={120}
             className={css.avatar}
+            priority
           />
         </div>
 
@@ -45,12 +48,10 @@ const ProfilePage = () => {
           <p>Email: {user.email}</p>
         </div>
 
-        <button onClick={() => router.push('/profile/edit')} className={css.editProfileButton}>
-          Edit
-        </button>
+        <Link href="/profile/edit" className={css.editProfileButton}>
+          Edit Profile
+        </Link>
       </div>
     </main>
   );
-};
-
-export default ProfilePage;
+}

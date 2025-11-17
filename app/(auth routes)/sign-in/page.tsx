@@ -36,6 +36,7 @@ const SignInPage = () => {
           <label htmlFor="email">Email</label>
           <input
             id="email"
+            name="email"
             type="email"
             className={css.input}
             value={email}
@@ -48,6 +49,7 @@ const SignInPage = () => {
           <label htmlFor="password">Password</label>
           <input
             id="password"
+            name="password"
             type="password"
             className={css.input}
             value={password}
