@@ -2,9 +2,10 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { checkSession } from '@/lib/api/serverApi';
 
+export const runtime = 'edge';
+
 export const config = {
   matcher: ['/profile/:path*', '/notes/:path*', '/sign-in', '/sign-up'],
-  runtime: 'experimental-edge',
 };
 
 export async function middleware(req: NextRequest) {
@@ -54,11 +55,8 @@ export async function middleware(req: NextRequest) {
   }
 
   if (isAuthRoute) {
-    if (accessToken) {
-      return NextResponse.redirect(new URL('/profile', req.url));
-    }
-    if (refreshToken) {
-      return NextResponse.redirect(new URL('/profile', req.url));
+    if (accessToken || refreshToken) {
+      return NextResponse.redirect(new URL('/', req.url));
     }
     return NextResponse.next();
   }

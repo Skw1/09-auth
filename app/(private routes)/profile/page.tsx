@@ -2,11 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getMe } from '@/lib/api/serverApi';
 import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
 import css from './ProfilePage.module.css';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'My Profile',
-  descriprion: 'User profile and settings',
+  description: 'User profile and settings',
 };
 
 export default async function ProfilePage() {

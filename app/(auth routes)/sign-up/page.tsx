@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '@/lib/api/clientApi';
+import { useAuthStore } from '@/lib/store/authStore';
 import css from './SignUpPage.module.css';
 
 const SignUpPage = () => {
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,7 +21,8 @@ const SignUpPage = () => {
     setError('');
 
     try {
-      await register({ email, password });
+      const user = await register({ email, password });
+      setUser(user);
       router.push('/profile');
     } catch (err) {
       setError((err as Error).message);
