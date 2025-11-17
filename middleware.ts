@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { checkSession } from '@/lib/api/serverApi';
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 export const config = {
   matcher: ['/profile/:path*', '/notes/:path*', '/sign-in', '/sign-up'],
